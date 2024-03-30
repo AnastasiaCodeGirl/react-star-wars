@@ -1,35 +1,35 @@
 // import styles from './PeoplePage/module.css';
-import { getApiResource } from '../../utils/network';
-import { useState, useEffect } from 'react';
-import { API_PEOPLE } from '../../constants/api';
+import { getApiResource } from "../../utils/network";
+import { useState, useEffect } from "react";
+import { API_PEOPLE } from "../../constants/api";
+import { getPeopleId, getPeopleImage } from "../../services/getPeopleData";
+import PeopleList from "../../components/PeoplePage/PeopleList";
+
 const PeoplePage = () => {
+  const [people, setPeople] = useState();
+  const getResource = async (url) => {
+    const res = await getApiResource(url);
+    const peopleList = res.results.map(({ name, url }) => {
+      const id = getPeopleId(url);
+      const img = getPeopleImage(id);
+      console.log(img);
+      return {
+        name,
+        url,
+        img
+      };
+    });
+    setPeople(peopleList);
+  };
+  useEffect(() => {
+    getResource(API_PEOPLE);
+  }, []);
 
-    const [ people, setPeople] = useState();
-    const getResource = async(url) => {
-        const res = await getApiResource(url);
-       const peopleList = res.results.map(({name, url})=> {
-       return {
-            name,
-            url
-       }
-       })
-       setPeople(peopleList);
-    }
-    useEffect(() => {
-       getResource(API_PEOPLE);
-    },[]);
-
-    return (
-        <>
-            {people  && (
-            <ul>
-                {people.map(({name, url}) => {
-                    return <li key={name}>{name}</li>; // Added return statement
-                })}
-            </ul>
-            )}
-        </>
-    )
+  return (
+    <>
+      {people && <PeopleList people={people}/>}
+    </>
+  );
 };
 
 export default PeoplePage;
