@@ -10,7 +10,7 @@ const PeoplePage = ({ setErrorApi }) => {
   const [people, setPeople] = useState(null);
 
   const getResource = async (url) => {
-    const res = await getApiResource( url);
+    const res = await getApiResource(1+url);
     if (res) {
       const peopleList = res.results.map(({ name, url }) => {
         const id = getPeopleId(url);
