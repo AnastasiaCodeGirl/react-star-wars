@@ -1,13 +1,26 @@
-import React from 'react'; // Add the missing import statement for React
-import PeoplePage from '@containers/PeoplePage';
-import styles from './App.module.css';
+import React from "react";
+import PeoplePage from "@containers/PeoplePage";
+import HomePage from "@containers/HomePage";
+import styles from "./App.module.css";
 
-import {getApiResource} from '../../utils/network';
+import { getApiResource } from "@utils/network";
 
-const App= () =>{
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
+
+const App = () => {
   return (
-    <PeoplePage />
-  )
-}
+    <>
+      <BrowserRouter>
+        <Link to="/">Home</Link>
+        <Link to="/people">People</Link>
+        <Routes>
+
+        <Route path="/" element={<HomePage />} />
+        <Route path="/people" element={<PeoplePage />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+};
 
 export default App;
