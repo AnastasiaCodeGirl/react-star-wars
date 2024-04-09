@@ -1,26 +1,28 @@
-import React from "react";
-import PeoplePage from "@containers/PeoplePage";
-import HomePage from "@containers/HomePage";
+import routesConfig from "@routes/routesConfig";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Header from "@components/Header";
 import styles from "./App.module.css";
-
-import { getApiResource } from "@utils/network";
-
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 
 const App = () => {
   return (
     <>
-      <BrowserRouter>
-        <Link to="/">Home</Link>
-        <Link to="/people">People</Link>
-        <Routes>
+     <BrowserRouter>
+				<div className={styles.wrapper}>
+					<Header />
 
-        <Route path="/" element={<HomePage />} />
-        <Route path="/people" element={<PeoplePage />} />
-        </Routes>
-      </BrowserRouter>
+					<Routes>
+						{routesConfig.map((route, index) => (
+							<Route
+								key={index}
+								path={route.path}
+								element={route.element}
+							/>
+						))}
+					</Routes>
+				</div>
+			</BrowserRouter>
     </>
-  );
-};
+  )
+}
 
 export default App;
